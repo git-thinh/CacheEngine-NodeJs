@@ -1,0 +1,206 @@
+﻿
+
+<div style="width: 100%;float: left">
+    <div style="float: left;width:100%; padding: 10px">
+        <div style="float: left; width: 50%">
+            <div style="width: 100%; padding: 10px; background-color: #f9f9f9; transition: opacity 0.2s ease-out; text-transform: uppercase;">
+                <h3>Thông tin tài sản</h3>
+            </div>
+            <div style="width: 100%; padding:5px 10px;float:left">
+                <div style="width: 40%; float: left"><span>Kênh:</span></div>
+                <div style="width: 60%; float: right"><span class="css-text-overflow">{{list.str_channel_name}}</span></div>
+            </div>
+            <div style="width: 100%; padding:5px 10px;float:left">
+                <div style="width: 40%; float: left"><span>URL:</span></div>
+                <div style="width: 60%; float: right"><span class="css-text-overflow">{{ list.str_url}}</span></div>
+                <!--<div style="width: 60%; float: right"><span class="css-text-overflow">{{ list.str_url !=undefined && list.str_url.length > 40 ?    list.str_url.substring(0, 40) : list.str_url }}</span></div>-->
+            </div>
+            <div style="width: 100%; padding:5px 10px;float:left">
+                <div style="width: 40%; float: left"><span>Số tiền muốn vay:</span></div>
+                <div style="width: 60%; float: right"><span class="css-text-overflow">{{  ___plugin('pol_pawn',list, 'lng_money' )  }}</span></div>
+            </div>
+            <div style="width: 100%; padding:5px 10px;float:left">
+                <div style="width: 40%; float: left"><span>Số ngày:</span></div>
+                <div style="width: 60%; float: right"><span class="css-text-overflow">{{ ___plugin('pol_pawn',list, 'int_days' )    }}</span></div>
+            </div>
+
+            <div style="width: 100%; padding:5px 10px;float:left">
+                <div style="width: 40%; float: left"><span>Loại tài sản:</span></div>
+                <div style="width: 60%; float: right"><span class="css-text-overflow">{{list.str_asset_type_name}}</span></div>
+            </div>
+            <div style="width: 100%; padding:5px 10px;float:left">
+                <div style="width: 40%; float: left"><span>Thương hiệu:</span></div>
+                <div style="width: 60%; float: right"><span class="css-text-overflow">{{list.str_trademark}}</span></div>
+            </div>
+            <div style="width: 100%; padding:5px 10px;float:left">
+                <div style="width: 40%; float: left"><span>Năm sản xuất:</span></div>
+                <div style="width: 60%; float: right"><span class="css-text-overflow">{{ ___plugin('pol_pawn',list, 'str_product_year' )   }}</span></div>
+            </div>
+            <div style="width: 100%; padding:5px 10px;float:left">
+                <div style="width: 40%; float: left"><span>Mô tả:</span></div>
+                <div style="width: 60%; float: right"><span class="css-text-overflow">{{list.str_description}}</span></div>
+            </div>
+
+        </div>
+        <div style="float: right;width: 50%">
+            <div style="width: 100%;padding: 10px; background-color: #f9f9f9;transition: opacity 0.2s ease-out;text-transform: uppercase;">
+                <h3>Thông tin khách hàng</h3>
+            </div>
+            <div style="width: 100%;padding:5px 10px;float:right">
+                <div style="width: 40%;float: left"><span>Tên KH:</span></div>
+                <div style="width: 60%;float: right"><span class="css-text-overflow">{{ ___plugin('pol_pawn',list.___customer,'str_name') }}</span></div>
+
+            </div>
+            <div style="width: 100%;padding:5px 10px;float:right">
+                <div style="width: 40%;float: left"><span>Giới tính:</span></div>
+                <div style="width: 60%;float: right"><span class="css-text-overflow">{{ ___plugin('pol_pawn',list.___customer,'int_gender') }}</span></div>
+            </div>
+            <div style="width: 100%;padding:5px 10px;float:right">
+                <div style="width: 40%;float: left"><span>Địa chỉ:</span></div>
+                <div style="width: 60%;float: right"><span class="css-text-overflow">{{ ___plugin('pol_pawn',list.___customer,'str_address') }}</span></div>
+            </div>
+            <div style="width: 100%;padding:5px 10px;float:right">
+                <div style="width: 40%;float: left"><span>Quận/huyện:</span></div>
+                <div style="width: 60%;float: right"><span class="css-text-overflow">{{list.str_district_name }}</span></div>
+            </div>
+            <div style="width: 100%;padding:5px 10px;float:right">
+                <div style="width: 40%;float: left"><span>Tỉnh/TP:</span></div>
+                <div style="width: 60%;float: right"><span class="css-text-overflow">{{list.str_city_name }}</span></div>
+            </div>
+            <div style="width: 100%;padding:5px 10px;float:right">
+                <div style="width: 40%;float: left"><span>Số di động:</span></div>
+                <div style="width: 60%; float: right">
+                    <a style="font-weight: 700; color: #646464 !important; cursor: pointer;" v-on:click="_APP.f_show_call(list.___customer.str_phone)">
+                        <b>{{ ___plugin('pol_pawn',list.___customer,'str_phone') }}</b>
+                        <i style="margin-left: 5px;" class="phone volume icon"></i>
+                    </a>
+                    <!--<span class="css-text-overflow">{{ ___plugin('pol_pawn',list.___customer,'str_phone') }}</span>-->
+                </div>
+            </div>
+            <div style="width: 100%;padding:5px 10px;float:right">
+                <div style="width: 40%;float: left"><span>Email:</span></div>
+                <div style="width: 60%;float: right"><span class="css-text-overflow">{{ ___plugin('pol_pawn',list.___customer,'str_email') }}</span></div>
+            </div>
+            <div style="width: 100%;padding:5px 10px;float:right">
+                <div style="width: 40%;float: left"><span>Campaign:</span></div>
+                <div style="width: 60%;float: right"><span class="css-text-overflow">{{list.str_campaign}}</span></div>
+
+                <!--<div style="width: 60%;float: right"><span class="css-text-overflow">{{list.str_url !== undefined && list.str_url.length > 40 ?  list.str_url.substring(0, 40) : list.str_url}}</span></div>-->
+            </div>
+        </div>
+    </div>
+
+    <div class="ui accordion" style="float: left;width:100%; padding: 10px">
+        <div class="title" style="width: 100%; float: left; padding: 10px; background-color: #edf6fd;box-shadow: 0 2px #d6ebfa;border-color: #bce8f1;transition: opacity 0.2s ease-out;color: #43a3e5;">
+            <span style="float: left"><h3>LỊCH SỬ CHĂM SÓC</h3></span>
+            <span style="float: right">
+                Xem chi tiết lịch sử
+            </span>
+        </div>
+        <div class="content" style="width: 100%;float: left">
+            <!--<table style="width:100%">
+                <tr v-for="process in list_process">
+                    <td style="width: 20%;padding:0 5px"><a class="ui label" :class="arr_color[Math.floor(Math.random()*arr_color.length)]" style="width:90%;text-align:center">{{process.str_action_name}}</a></td>
+                    <td style="width: 20%;padding:0 5px"><span> {{___plugin('pol_process',process,'lng_created_at')}}</span></td>
+                    <td style="width: 25%;padding:0 5px"><a href="javascript:void(0)">{{process.str_created_by_name}}<br>{{process.str_created_group}}</a></td>
+                    <td style="width: 35%;padding:0 5px"><span class="css-text-overflow">{{process.str_content}}</span></td>
+                </tr>
+            </table>-->
+            
+            
+            <div v-for="process in list_process" style="float: left; width: 100%; padding: 10px 5px">
+                <!--<div style="width: 20%;padding:0 5px;float: left"><a class="ui label" :class="arr_color[Math.floor(Math.random()*arr_color.length)]" style="width:90%;text-align:center">{{process.str_action_name}}</a></div>-->
+
+                <div style="width: 25%; padding: 0 5px; float: left">
+                    <a class="ui label" :class="process.color" style="width: 90%; text-align: center">{{process.str_action_name}}</a>
+                </div>
+                <div style="width: 20%;padding:0 5px;float: left"><span> {{___plugin('pol_process',process,'lng_created_at')}}</span></div>
+                <div style="width: 25%;padding:0 5px;float: left"><a href="javascript:void(0)">{{process.str_created_by_name}}<br>{{process.str_created_group}}</a></div>
+                <div style="width: 30%;padding:0 5px;float: left"><span class="css-text-overflow">{{process.str_content}}</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui form" style="float: left;width:100%; padding: 10px;" v-if="list.int_status !== 0 && (_PROFILE.group_id == 53 || _PROFILE.group_id == 44)">
+        <div style="float: left; width: 100%;transition: opacity 0.2s ease-out; padding: 10px;    background-color: #e0f5e9;color: #34a263;box-shadow: 0 2px #f4d8d4;    border-color: #ebccd1;">
+            <h3 style="text-transform: uppercase;">Chuyển đơn</h3>
+        </div>
+        <div class="computer only row" style="float: left; width: 100%;padding: 10px">
+
+            <div class="field two fields" style="float: left; width: 100%;padding: 10px;margin-bottom: 0px;">
+                <label style="float:left;width:20%;padding:10px">Nơi nhận</label>
+
+                <kit-dropdown-simple :vue-ref="'FORM_INFOR___GROUP_SHOP'"
+                                     :str-action="'activate'"
+                                     :str-icon-textbox="'tag'"
+                                     :str-min-width="'250px'"
+                                     :str-placeholder="'Chọn nhóm cửa hàng'"
+                                     :api-name="'group'"
+                                     :api-bind-id="'id'"
+                                     :api-bind-name="'str_name'"
+                                     :str-name-field-value="'id'"
+                                     :data-store-value="'objUpdate.int_group_shop_id'"
+                                     :data-store-text="'objUpdate.str_group_shop_name'"
+                                     :obj-error-key="'int_group_shop_id'"
+                                     :bit-full-text-search="true"></kit-dropdown-simple>
+            </div>
+            <span style="width: 100%; float: right; text-align: center;color: red">{{objErrorLabel.int_group_shop_id}}</span>
+
+            <div class="field two fields" style="float: left; width: 100%;padding: 10px;margin-bottom: 0px;">
+                <label style="float:left;width:20%;padding:10px">Khách hẹn</label>
+                <kit-full-date-time :vue-ref="'FORM_INFOR___RESEVER_TIME'" style="min-width: 250px;width: 100%;"></kit-full-date-time>
+            </div>
+
+            <div class="field two fields priority" style="float: left; width: 100%;padding: 10px;margin-bottom: 0px;">
+                <label style="float:left;width:17%;padding:10px">Độ ưu tiên cao</label>
+                <div style="float: right; width: 83%">
+
+                    <kit-dropdown-simple :vue-ref="'FORM_INFOR___PRIORITY'"
+                                         :str-action="'activate'"
+                                         :str-icon-textbox="'tag'"
+                                         :str-min-width="'250px'"
+                                         :str-placeholder="'Chọn độ ưu tiên'"
+                                         :api-name="'pol_priority'"
+                                         :api-bind-id="'id'"
+                                         :api-bind-name="'str_priority_name'"
+                                         :str-name-field-value="'id'"
+                                         :data-store-value="'objUpdate.int_priority_id'"
+                                         :data-store-text="'objUpdate.str_priority_name'"
+                                         :obj-error-key="'int_priority_id'"
+                                         :bit-full-text-search="true"></kit-dropdown-simple>
+                </div>
+            </div>
+            <span style="width: 100%; float: right; text-align: center;color: red">{{objErrorLabel.int_priority_id}}</span>
+        </div>
+    </div>
+
+    <div class="ui form" style="float: left;width:100%; padding: 10px;" v-if="list.int_status !== 0">
+        <div style="float: left; width: 100%;transition: opacity 0.2s ease-out; ; padding: 10px;    background-color: #f9eae8;color: #c54736;box-shadow: 0 2px #f4d8d4;    border-color: #ebccd1;">
+            <h3 style="text-transform: uppercase;">Thông tin chăm sóc Khách Hàng</h3>
+        </div>
+        <div class="computer only row" style="float: left; width: 100%;padding: 10px">
+            <div class="field two fields" style="float: left; width: 100%;padding: 10px;margin-bottom: 0px;">
+                <label style="float:left;width:20%;padding:10px">Nội dung</label>
+                <kit-textarea :vue-ref="'FORM_PAWN_ADDNEW___STR_DESCRIPTION'"
+                              :str-style="'width: 98%;height: 69px;'"
+                              :str-placeholder="'Nhập nội dung'"
+                              :data-store-value="'objUpdate.str_content'"
+                              :is-auto-save="true"
+                              :obj-error-key="'str_content'"></kit-textarea>
+            </div>
+            <span style="width: 100%; float: right; text-align: center;color: red">{{objErrorLabel.str_content}}</span>
+            <div class="field two fields" style="float: left; width: 100%;padding: 10px;margin-bottom: 0px;">
+                <label style="float:left;width:20%;padding:10px">Khách hẹn gọi lại</label>
+                <kit-full-date-time :vue-ref="'FORM_INFOR___RECALL_TIME'" style="min-width: 250px;width: 100%;"></kit-full-date-time>
+            </div>
+        </div>
+    </div>
+
+
+    <div for="___footer" style="display: flex">
+        <button tabindex="0" @click="___submit('HUY_DON')" type="button" class="ui red button">Hủy đơn</button>
+        <button tabindex="1" @click="___submit('SAVE_CARE_INFO')" type="button" class="ui blue button right"> Lưu nội dung chăm sóc</button>
+        <button tabindex="2" @click="___submit('FORWARD_PAWN')" type="button" class="ui violet button">Chuyển đơn</button>
+        <button tabindex="3" @click="___submit('SMS_FAIL')" type="button" class="ui yellow button right">  SMS không liên hệ được</button>
+    </div>
+</div>

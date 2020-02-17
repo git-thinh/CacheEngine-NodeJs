@@ -1,0 +1,41 @@
+﻿<div>
+    <div style="padding: 15px 15px 80px;">
+        <div class="year" style="padding: 10px 15px;margin-bottom: 10px !important;background-color: #fdf3e5; float: left;width: 100%">
+            <kit-dropdown-year v-bind:items="[{ id: 2019, title: 2019 }, { id: 2018, title: 2018 }, { id: 2017, title: 2017 }, { id: 2016, title: 2016 }, { id: 2015, title: 2015 }]"></kit-dropdown-year>
+
+        </div>
+        <div>
+            <table class="tbl-list-account" style="width: 100%">
+                <thead>
+                    <tr style="text-align: center;text-transform: none; background: #f4f3f8;color: #868e96; font-size: 13px; font-weight: 600; border: 1px #f4f5f8 solid; vertical-align: middle; position: relative;">
+                        <th>Tháng</th>
+                        <th>Số đăng ký</th>
+                        <th>Chờ xử lý</th>
+                        <th>Đã xử lý</th>
+                        <th>Tỷ lệ thành công</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item,index) in mag">
+                        <td style="text-align: center">{{index+1}}</td>
+                        <td style="text-align: right">{{item.totalDaDangKy}}</td>
+                        <td style="text-align: right">{{item.totalChoXuLy}}</td>
+                        <td style="text-align: right">{{item.totalDaXuLy}}</td>
+                        <td style="text-align: right">{{item.totalDaChuyenThanhHopDong}}/{{item.totalDaDangKy}}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: right">Tổng số: <span style="font-weight: bold">{{totalall}}</span></td>
+                        <td style="text-align: right"></td>
+                        <td style="text-align: right"></td>
+                        <td style="text-align: right"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <span>Thời gian lấy dữ liệu:</span>
+            <span style="font-weight: bold">{{str_date_created}}</span>
+        </div>
+    </div>
+
+    <div for="___footer"></div>
+</div>

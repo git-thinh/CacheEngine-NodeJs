@@ -1,0 +1,47 @@
+﻿<div>
+    <div style="position:fixed;top:0;left:0;width:100%;height:100vh;background-color:#d4d4d5;opacity:0.5;z-index:9;"></div>
+    <!--<div v-show="popModalVisible != false" @click="popup_close" style="position:fixed;top:0;left:0;width:100%;height:100vh;background-color:#d4d4d5;opacity:0.5;z-index:9;"></div>-->
+    <div style="display: flex;flex-direction: column;z-index: 99999;position: fixed;justify-content: space-between;"
+         v-bind:style="{width: objStyle.width, height: objStyle.height, right: objStyle.right, left: objStyle.left, top: objStyle.top,'background-color': objStyle.bgcolor}">
+
+        <div v-show="loading" class="ui active dimmer">
+            <div class="ui loader"></div>
+        </div>
+
+        <div v-show="popHeaderVisible != false" for="HEADER" style="width:100%;font-size: 20px;text-transform: uppercase;font-weight: 700;border-bottom: 1px solid #e5e5e5;"
+             v-bind:style="{height: objStyle.header.height}">
+            <button @click="popup_close" type="button" class="close"
+                    style="margin-top: 9px;-webkit-appearance: none;padding: 0;cursor: pointer; background: 0 0;border: 0;float: right; font-size: 21px;font-weight: 700;line-height: 1;color: #000;text-shadow: 0 1px 0 #fff;">
+                <i class="times icon" style="color: #5555556b;"></i>
+            </button>
+            <h5 class="modal-title" style="font-size: 16px;font-weight: normal;margin: 0;"
+                v-bind:style="{padding: 'calc( ('+objStyle.header.height+' - 17px) / 2 ) 0 0 17px'}">
+                {{strTitle}}
+            </h5>
+        </div>
+
+        <div for="BODY" style="width: 100%;background-color: #fafafa;padding: 0;margin: 0;overflow-x: hidden;overflow-y: auto;position: relative;display: inherit;"
+             v-bind:style="{height: 'calc( 100% - (' + objStyle.header.height + ' + ' + objStyle.footer.height + ') )'}">
+            [POPUP_BODY]
+        </div>
+
+
+
+        <div for="FOOTER" style="width: 100%;justify-content: flex-end;display: flex;flex-direction: row;padding: 5px;border-top: 1px solid #e5e5e5;"
+             v-bind:style="{height: objStyle.footer.height}">
+
+            <!--[POPUP_FOOTER]-->
+
+            <div class="ui" v-show="strHtmlFooter.length == 0">
+                <button class="ui primary button" @click="___submit">
+                    <i :class="[strSubmitIcon, 'icon']"></i>
+                    {{strSubmitText}}
+                </button>
+                <button class="ui button" @click="popup_close">
+                    <i class="times icon"></i>
+                    Đóng lại
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

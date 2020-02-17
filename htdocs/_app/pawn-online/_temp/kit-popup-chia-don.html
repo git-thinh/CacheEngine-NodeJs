@@ -1,0 +1,26 @@
+﻿
+
+<div style="width: 100%; float: left; padding: 30px;">
+    <h1 style="display: block;position: relative;max-width: 100%;margin: 24px 0px 0.4em;padding: 0px;color: rgba(0, 0, 0, 0.7);font-size: 1.99em;font-weight: 600;text-align: center;text-transform: none;overflow-wrap: break-word;">Chọn nhân viên nhận đơn</h1>
+    <div style="float: left; width: 100%">
+
+        <kit-dropdown-simple :vue-ref="'FORM_CHIA_DON_CALL'"
+                             :str-action="'activate'"
+                             :str-icon-textbox="'user'"
+                             :str-min-width="'240px'"
+                             :str-placeholder="'Chọn nhân viên'"
+                             :str-icon-item="'ui red empty circular label'"
+                             :api-name="'user'"
+                             :api-condition="'function(o){return o.group_id == '+ _PROFILE.group_id +' }'"
+                             :api-bind-id="'id'"
+                             :api-bind-name="'str_full_name'"
+                             :str-name-field-value="'id'"
+                             :data-store-value="'objUpdate.int_caller_id'"
+                             :is-auto-save="true"
+                             :obj-error-key="'int_caller_id'"
+                             :bit-full-text-search="true"></kit-dropdown-simple>
+
+
+    </div>
+    <span style="width: 100%; float: right; text-align: center;color: red">{{objErrorLabel.int_caller_id}}</span>
+</div>

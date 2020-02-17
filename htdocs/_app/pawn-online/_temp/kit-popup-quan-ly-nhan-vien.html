@@ -1,0 +1,99 @@
+﻿
+<div style="padding: 15px 15px 80px;">
+    <div style="padding: 10px 15px;margin-bottom: 10px !important;background-color: #fdf3e5;">
+        <h6 style="font-size: 12px !important;margin: 0px">Trạng thái nhân viên cập nhật 10s 1 lần</h6>
+    </div>
+    <div style="width: 100%">
+        <table class="tbl-list-account" style="width: 100%">
+            <thead>
+                <tr style="text-align: center;text-transform: none; background: #f4f3f8;color: #868e96; font-size: 13px; font-weight: 600; border: 1px #f4f5f8 solid; vertical-align: middle; position: relative;">
+                    <th>STT</th>
+                    <th>Nhân viên</th>
+                    <th>Khu vực xử lý</th>
+                    <th>Trạng thái</th>
+                    <th>Đơn đang xử lý</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item,index) in list">
+                    <td style="text-align: center">{{index+1}}</td>
+                    <td>{{item.str_full_name}}</td>
+                    <td>
+                        <div class="field" style="float: left; width: 16.6%; min-width: 260px;">
+
+                            <kit-dropdown-simple :vue-ref="'FORM_SEARCH___AREA_'+index"
+                                                 :event-change="f_area_on_changed"
+                                                 :obj-value="item"
+                                                 :str-action="'activate'"
+                                                 :str-icon-textbox="'globe'"
+                                                 :str-min-width="'240px'"
+                                                 :str-placeholder="'Tất cả'"
+                                                 :str-icon-item="'ui red empty circular label'"
+                                                 :api-name="'pol_area'"
+                                                 :api-bind-id="'id'"
+                                                 :api-bind-name="'str_name'"
+                                                 :str-name-field-value="'id'"
+                                                 :data-store-type="'int'"
+                                                 :data-store-value="'item.int_pol_region'"
+                                                 :data-store-text="'item.str_name'"
+                                                 :bit-full-text-search="true"></kit-dropdown-simple>
+
+                            <!--<kit-dropdown-simple :vue-ref="'FORM_PAWN_EDIT___REGION_CITY'"
+                                 :vue-ref-callback="'FORM_PAWN_EDIT___REGION_DISTRICT'"
+                                 :str-action="'activate'"
+                                 :str-icon-textbox="'map marker alternate'"
+                                 :str-placeholder="'Chọn thành phố'"
+                                 :api-name="'region'"
+                                 :api-condition="'function(o){ return o.int_pid == 0; }'"
+                                 :api-bind-id="'id'"
+                                 :api-bind-name="'str_name'"
+                                 :str-name-field-value="'id'"
+                                 :data-store-type="'int'"
+                                 :data-store-value="'objUpdate.city_id'"
+                                 :data-store-text="'objUpdate.str_city_name'"
+                                 :obj-error-key="'city_id'"
+                                 :bit-full-text-search="true"></kit-dropdown-simple>-->
+                        </div>
+
+                    </td>
+                    <td style="text-align: center">
+                        <div :class="item.int_pol_status === 1 ? 'ui test toggle checkbox checked':'ui test toggle checkbox'">
+                            <input v-if="item.int_pol_status === 1" class="btn-check" name="user_change" type="checkbox" @change="change_pol_status_(item,event,item.id)" checked="checked">
+                            <input v-else="item.int_pol_status === 0" class="btn-check" name="user_change" type="checkbox" @change="change_pol_status_(item,event,item.id)">
+                            <label id="check_value"></label>
+                        </div>
+                        <!--<div class="item">
+                        <kit-switch-online :event-change="_APP.f_user_online_state_changed" :str-placeholder="'Online'" :obj-value="true"></kit-switch-online>
+                    </div>-->
+                        <!--<div class="item">
+                        <kit-check :vue-ref="'MENU_USER___ONLINE_ON_OFF'"
+                                   :str-class="'toggle'"
+                                   :event-change="_APP.f_user_online_state_changed"
+                                   :data-store-value="'objAddNew.int_cus_gender'"
+                                   :is-auto-save="true"
+                                   :obj-value-default="'on'"
+                                   :obj-value="{ on: { id: 1, name: 'Online' }, off: { id: 0, name: 'Offline' } }"></kit-check>
+                    </div>-->
+                    </td>
+                    <td style="text-align: right">{{item.int_don}}</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center"></td>
+                    <td style="text-align: right"></td>
+                    <td style="text-align: right"></td>
+                    <td style="text-align: right"></td>
+                    <td style="text-align: right"></td>
+
+                </tr>
+
+
+            </tbody>
+        </table>
+        <!--<span>Thời gian lấy dữ liệu:</span>
+        <span style="font-weight: bold">{{str_date_created}}</span>-->
+
+    </div>
+    <div for="___footer">
+       
+    </div>
+</div>

@@ -1,0 +1,330 @@
+﻿
+/* width */
+::-webkit-scrollbar {
+    width: 9px !important;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background-color: #fff !important;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: grey !important;
+    border-radius: 0 !important;
+}
+
+.no-select-text {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera and Firefox */
+}
+
+textarea {
+    resize: none !important;
+}
+
+.ui-component {
+    width: 100%;
+}
+
+
+#app {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+div[for="BODY"] div[for="___footer"] {
+    display: none !important;
+}
+
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+.ui.dropdown .menu .ui.icon.search.input {
+    width: 90% !important;
+}
+
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/* dataTables.fixedColumns[BEGIN]: Ensure that the demo table scrolls */
+.app-grid-main table th, td {
+    white-space: nowrap;
+}
+
+.app-grid-main div.dataTables_wrapper {
+    width: 888px;
+    /*margin: 0 auto;*/
+    margin: 0;
+}
+
+/********************************************************************/
+
+.app-grid-main .dataTables_wrapper
+.dataTables_scroll div.dataTables_scrollBody,
+.app-grid-main table.dataTable.no-footer {
+    /*border-bottom: 1px solid #111;*/
+    border-bottom: none !important;
+}
+
+.app-grid-main .DTFC_LeftHeadWrapper,
+.app-grid-main .DTFC_RightHeadWrapper {
+    background: #fff !important;
+}
+
+.app-grid-main .DTFC_RightHeadBlocker {
+    background: #fff !important;
+}
+
+.app-grid-main .row.dt-table,
+.app-grid-main .ui.grid > .column:not(.row), .ui.grid > .row > .column {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.app-grid-main table.dataTable tbody tr.row_selected {
+    background-color: #B0BED9;
+}
+
+/* dataTables.fixedColumns[END] */
+
+/* datatables.net */
+
+.ui .menu .item-mn {
+    color: rgb(54, 117, 197) !important;
+    font-family: Tahoma;
+    font-size: 13px;
+}
+
+    .ui .menu .item-mn.active {
+        color: #34a263 !important;
+        font-weight: 700 !important;
+    }
+
+td.dtm-cell-action {
+    padding: 0 !important;
+    text-align: center !important;
+    position: relative;
+}
+
+    td.dtm-cell-action .c-action {
+        height: 22px;
+        padding: 5px;
+        text-align: center;
+        background-color: #fff;
+        border-radius: 4px;
+        color: rgb(54, 117, 197);
+    }
+
+        td.dtm-cell-action .c-action.active {
+            background-color: red;
+        }
+
+#dom_temp___ .mn-action {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    min-height: 100px;
+    z-index: 1;
+    display: none;
+    opacity: 0;
+}
+
+/********************************************************************/
+.DTFC_NoData,
+.dataTables_empty {
+    display: none !important;
+    border: none !important;
+    background-color: transparent !important;
+}
+
+.dataTables_scrollHead,
+.DTFC_LeftHeadWrapper,
+.DTFC_RightHeadWrapper {
+    border-bottom: 1px solid #ddd !important;
+}
+
+table.dataTable.row-border tbody th,
+table.dataTable.row-border tbody td,
+table.dataTable.display tbody th,
+table.dataTable.display tbody td {
+    border-top: none;
+    border-bottom: 1px solid #ddd;
+}
+
+table.dataTable thead th, table.dataTable thead td {
+    border-bottom: 1px solid #f5f5f5 !important;
+}
+
+.dataTables_scrollHead,
+table.dataTable thead th {
+    color: #868e96;
+    background-color: #F4F3F8;
+}
+
+.dataTables_scroll tbody tr td {
+    border-right: 1px solid #eee;
+}
+
+.dataTables_scroll tbody tr.dt-row-checked td:last-of-type,
+.DTFC_LeftBodyLiner tbody tr.dt-row-checked td:last-of-type,
+.DTFC_RightBodyLiner tbody tr.dt-row-checked td:last-of-type {
+    border-right: none !important;
+}
+
+.dataTables_scroll tbody tr.dt-row-checked td,
+.DTFC_LeftBodyLiner tbody tr.dt-row-checked td,
+.DTFC_RightBodyLiner tbody tr.dt-row-checked td {
+    background-color: #F9EAE8;
+}
+
+.DTFC_RightBodyLiner,
+.DTFC_LeftBodyLiner {
+    overflow-x: hidden !important;
+    /*left:14px !important;*/
+}
+
+/*.DTFC_LeftBodyLiner tbody tr.odd td,
+    .DTFC_RightBodyLiner tbody tr.odd td {
+        background-color: #ddd !important;
+    }*/
+
+/********************************************************************/
+
+.DTFC_LeftBodyWrapper {
+    border-right: 1px solid #ccc !important;
+}
+
+.DTFC_RightBodyLiner table {
+    border-left: 1px solid #ccc !important;
+}
+
+.DTFC_LeftBodyLiner tbody td,
+.DTFC_RightBodyLiner tbody td {
+    border-left: none !important;
+    border-right: none !important;
+}
+
+.DTFC_LeftBodyLiner tbody tr td {
+    text-align: right !important;
+}
+
+
+.dtm-cell-check {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.dtm-cell-stt {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    font-size: 11px;
+    color: #aaa;
+}
+
+.dtm-cell-name {
+    text-align: right !important;
+    border-left: none !important;
+    border-right: none !important;
+}
+
+.dtm-cell-money {
+    text-align: right !important;
+}
+
+.dtm-cell-last {
+    border-right: none !important;
+}
+
+.dtm-cell-status {
+}
+
+    .dtm-cell-status b {
+        border-radius: 5px;
+        width: 10px;
+        height: 10px;
+        margin-right: 3px;
+        display: inline-block;
+    }
+
+        .dtm-cell-status b.st0 {
+            background-color: #f4516c;
+        }
+
+        .dtm-cell-status b.st1 {
+            background-color: #575962;
+        }
+
+        .dtm-cell-status b.st2 {
+            background-color: #36a3f7;
+        }
+
+        .dtm-cell-status b.st4 {
+            background-color: #34bfa3;
+        }
+
+.td-carinbank {
+    background-color: orange;
+    color: #fff;
+    border-radius: 4px;
+    padding: 2px 3px;
+    font-size: 10px;
+    font-weight: normal;
+    margin-left: 3px;
+}
+
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+.app-pager-main div {
+    float: left;
+    padding-top: 7px;
+}
+
+.app-pager-main p {
+    float: right;
+}
+
+    .app-pager-main p b, .app-pager-main p i {
+        float: right;
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
+        padding-top: 6px;
+    }
+
+    .app-pager-main p b {
+        float: right;
+        background-color: #f9f9f9;
+        color: #5c90d2;
+        border-bottom: 2px solid #5c90d2;
+        text-align: center;
+        width: auto;
+        min-width: 24px;
+        margin: 0 9px;
+    }
+
+    .app-pager-main p i {
+        float: right;
+        color: #777;
+    }
+
+        .app-pager-main p i:hover {
+            background-color: #f9f9f9;
+            cursor: pointer;
+            color: #5c90d2;
+        }
+
+.ui.dropdown .menu > .message {
+    display:none !important;
+}

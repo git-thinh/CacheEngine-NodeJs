@@ -1,0 +1,24 @@
+﻿
+<div style="width: 100%; float: left; padding: 30px;">
+    <h1 style="display: block;position: relative;max-width: 100%;margin: 24px 0px 0.4em;padding: 0px;color: rgba(0, 0, 0, 0.7);font-size: 1.99em;font-weight: 600;text-align: center;text-transform: none;overflow-wrap: break-word;">Cập nhật vùng miền đơn</h1>
+    
+    <div style="float: left; width: 100%">
+
+        <kit-dropdown-simple :vue-ref="'FORM_CHUYEN_VUNG_MIEN_CALL'"
+                             :str-action="'activate'"
+                             :str-icon-textbox="'globe'"
+                             :str-min-width="'240px'"
+                             :str-placeholder="'Chọn tất cả Miền'"
+                             :str-icon-item="'ui red empty circular label'"
+                             :api-name="'pol_area'"
+                             :api-bind-id="'id'"
+                             :api-bind-name="'str_name'"
+                             :str-name-field-value="'id'"
+                             :data-store-value="'objUpdate.int_area_id'"
+                             :is-auto-save="true"
+                             :obj-error-key="'int_area_id'"
+                             :bit-full-text-search="true"></kit-dropdown-simple>
+
+    </div>
+    <span style="width: 100%; float: right; text-align: center;color: red">{{objErrorLabel.int_area_id}}</span>
+</div>

@@ -1,0 +1,40 @@
+﻿
+<div>
+    <h1 style="display: block;position: relative;max-width: 100%;margin: 24px 0px 0.4em;padding: 0px;color: rgba(0, 0, 0, 0.7);font-size: 1.99em;font-weight: 600;text-align: center;text-transform: none;overflow-wrap: break-word;">ĐẶT LỊCH TƯ VẤN</h1>
+
+
+    <div style="float: left;width: 100%">
+        <div style="float: left; width: 100%;padding: 20px">
+            <label style="width: 20%; float: left;font-size: 13px;font-weight: 600;color: rgb(84, 84, 84);">Thời gian: <span style="color:red;">*</span></label>
+
+            <div style="float: right; width: 80%;">
+                <kit-full-date-time :vue-ref="'FORM_SCHEDULE___TIME'" style="min-width: 250px; width: 100%;"></kit-full-date-time>
+            </div>
+        </div>
+        <div style="float: left; width: 100%;padding: 20px">
+            <label style="width: 20%; float: left;font-size: 13px;font-weight: 600;color: rgb(84, 84, 84);">Ghi chú:<span style="color:red;">*</span></label>
+
+            <div style="float: right; width: 80%;">
+
+                <kit-textarea :vue-ref="'FORM_SCHEDULE___STR_DESCRIPTION'"
+                              :str-style="'width: 100%;height: 130px;'"
+                              :str-placeholder="'Nhập nội dung'"
+                              :data-store-value="'objUpdate.str_content'"
+                              :is-auto-save="true"
+                              :obj-error-key="'str_content'"></kit-textarea>
+            </div>
+
+            <span style="width: 100%; float: right; text-align: center;color: red">{{objErrorLabel.str_content}}</span>
+
+        </div>
+
+    </div>
+    <!--<div style="float: left; width: 100%; padding: 10px;text-align: center">
+        <button @click="_add_new_support_schedule" type="button" style="min-width: 100px;cursor:pointer;border: 0px; border-radius: 0.25em; background: rgb(48, 133, 214); color: rgb(255, 255, 255); padding: 10px; box-shadow: none;">
+            Chấp nhận
+        </button>
+        <button @click="___popup_close" type="button" style="min-width: 100px;cursor:pointer;border: 0px; border-radius: 0.25em; background: rgb(170, 170, 170); color: rgb(255, 255, 255); padding: 10px; box-shadow: none;">
+            Đóng
+        </button>
+    </div>-->
+</div>

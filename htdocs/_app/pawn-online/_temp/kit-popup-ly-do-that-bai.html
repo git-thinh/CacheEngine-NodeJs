@@ -1,0 +1,48 @@
+﻿<div>
+        <h1 style="display: block;position: relative;max-width: 100%;margin: 24px 0px 0.4em;padding: 0px;color: rgba(0, 0, 0, 0.7);font-size: 1.99em;font-weight: 600;text-align: center;text-transform: none;overflow-wrap: break-word;">Chọn lý do thất bại</h1>
+        <div style="width: 100%;float: left">
+            <div style="padding: 20px; width: 100%;float: left">
+                <label style="float: left;width: 20%">Lý do <span style="color:red;">*</span></label>
+                <div style="float: right;width: 80%;">
+
+                    <kit-dropdown-simple :vue-ref="'FORM_REASON_FAIL_REASON'"
+                                         :str-action="'activate'"
+                                         :str-icon-textbox="'tag'"
+                                         :str-min-width="'250px'"
+                                         :str-placeholder="'Chọn lý do'"
+                                         :api-name="'pol_reason_fail'"
+                                         :api-bind-id="'id'"
+                                         :api-bind-name="'str_canceled_reason'"
+                                         :str-name-field-value="'id'"
+                                         :data-store-value="'objUpdate.int_reason_fail_id'"
+                                         :data-store-text="'objUpdate.str_canceled_reason'"
+                                         :obj-error-key="'int_reason_fail_id'"
+                                         :bit-full-text-search="true"></kit-dropdown-simple>
+                </div>
+            </div>
+            <span style="width: 100%; float: left; text-align: center;color: red">{{objErrorLabel.int_reason_fail_id}}</span>
+
+            <div style="padding: 20px; width: 100%;float: left">
+                <label style="float: left;width: 20%">Nội dung <span style="color:red;">*</span></label>
+                <div style="float: right;width: 80%;">
+
+                    <kit-textarea :vue-ref="'FORM_REASON_FAIL_DESCRIPTION'"
+                                  :str-style="'width: 100%;height: 315px;'"
+                                  :str-placeholder="'Nhập nội dung'"
+                                  :data-store-value="'objUpdate.str_content'"
+                                  :is-auto-save="true"
+                                  :obj-error-key="'str_content'"></kit-textarea>
+                </div>
+                <span style="width: 100%; float: left; text-align: center;color: red">{{objErrorLabel.str_content}}</span>
+
+            </div>
+            <!--<div  style="padding: 20px; width: 100%; float: left;text-align: center">
+                <button @click="f_huydon_submit" type="button" style="cursor:pointer;border: 0px; border-radius: 0.25em; background: rgb(48, 133, 214); color: rgb(255, 255, 255); font-size: 1.0625em; margin: 0px 0.3125em; padding: 0.625em 2em; font-weight: 500; box-shadow: none;">
+                    Hủy đơn
+                </button>
+                <button @click="___popup_close" type="button" style="cursor:pointer;border: 0px; border-radius: 0.25em; background: rgb(170, 170, 170); color: rgb(255, 255, 255); font-size: 1.0625em; margin: 0px 0.3125em; padding: 0.625em 2em; font-weight: 500; box-shadow: none;">
+                    Không
+                </button>
+            </div>-->
+        </div> 
+</div>

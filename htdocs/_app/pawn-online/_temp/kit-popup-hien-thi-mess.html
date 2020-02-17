@@ -1,0 +1,30 @@
+﻿<div>
+    <div style="float: left; width: 100%;    padding: 15px 20px 0;background-color: #f9f9f9; text-align: right;margin-bottom: 0">
+        <!--<a href="#">  <i class="sync alternate icon"></i></a>-->
+        <span style="color: red; float: right;">Tổng có {{_DATA.objNotify.length}} tin nhắn</span>
+    </div>
+
+    <!--<div style="float: left; width: 100%;    padding: 15px 20px;background-color: #f9f9f9; text-align: right;">
+        <h3 style="color: cornflowerblue;">
+            <a title="Xem tất cả!" style=" text-transform: uppercase; float: left; width: 80%;   text-align: left;">
+               Thông báo
+            </a>
+            <span style="color: red; float: right;width: 20%">{{_DATA.objNotify.length}}</span>
+        </h3>
+    </div>-->
+    <div style="margin: 0 auto;    padding: 20px 20px 1px;overflow-x: visible;transition: opacity 0.2s ease-out; float: left;width: 100%">
+        <ul style="margin: 0; padding: 0; list-style: none;" v-for="(item, index) in (_.sortBy(_DATA.objNotify, function(o){ return o.id; })).reverse()">
+            <li style="margin-bottom: 7px; padding-bottom: 7px; padding-left: 40px; font-size: 13px; border-bottom: 1px solid #f3f3f3; position: relative;">
+                <span style="position: absolute;left: -14px;color: #999;top: 0;background-color: #f4f4f4;font-size: 10px;padding: 0px 3px;border-radius: 9px;min-width: 20px;text-align: center;">{{index+1}}</span>
+                <i :class="['icon', f_get_icon_by_step_id(item.step_id) ]" 
+                   style="color: #f3b760; position: absolute; left: 10px; top: 0; display: inline-block; width: 20px; height: 20px; line-height: 20px; font-size: 14px; text-align: center;"></i>
+                <span href="#" target="_blank">
+                    <span :style="[item.int_status == 1 ? {'font-weight': 'normal'} : {'font-weight': 'bold'}, {'font-family': 'Arial'}]">{{item.message}}</span>
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    <div for="___footer">
+    </div>
+</div> 

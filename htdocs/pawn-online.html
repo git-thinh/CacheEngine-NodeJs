@@ -1,0 +1,564 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+    <title>Pawn Online</title>
+
+    <script src="_lib/classie.js"></script>
+    <script src="_lib/lodash.min.js"></script>
+    <script src="_lib/jquery.min.3.3.1.js"></script>
+    <script src="_lib/head.load.min.js"></script>
+
+    <link href="_lib/fomantic-ui/semantic.min.css" rel="stylesheet" />
+    <script src="_lib/fomantic-ui/semantic.min.js"></script>
+
+    <script src="_lib/vue/vue.min.js"></script>
+
+    <script src="_lib/pouchdb/pouchdb-7.1.1.min.js"></script>
+    <script src="_lib/pouchdb/db-store.js"></script>
+
+    <script src="_lib/sweetalert.min.js"></script>
+
+    <script src="_lib/datatables/jquery.dataTables.min.js"></script>
+    <link href="_lib/datatables/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="_lib/datatables/dataTables.fixedColumns.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+
+    <!--<script src="init.js"></script>-->
+    <script>
+        head.load([{ init_js: '/init.js?v=' + new Date().getHours() }]);
+    </script>
+    <!-- JWT Encode - Start -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/hmac-sha256.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/enc-base64-min.js"></script>
+    <!-- JWT Encode - End -->
+
+</head>
+<body>
+    <div id="app" style="padding-top:45px;">
+        <div v-show="loading" style="position:fixed;top:0;left:0;width:100%;height:100%;background-color:#fff;z-index:9999999;">
+            <div class="ui">
+                <div class="ui active slow green double loader"></div>
+            </div>
+        </div>
+
+        <!--<div class="ui dropdown ui-menu-user" style="position: fixed;left: 10px;top: 6px;z-index: 9999;">
+            <i class="bars icon"></i>
+            <div class="text">Danh mục chức năng</div>
+            <div class="menu">
+
+                <div class="item">Danh mục chức năng</div>
+                <div class="item">
+                    <span class="description">ctrl + o</span>
+                    Open...
+                </div>
+                <div class="item">
+                    <span class="description">ctrl + s</span>
+                    Save as...
+                </div>
+                <div class="item">
+                    <span class="description">ctrl + r</span>
+                    Rename
+                </div>
+                <div class="item">Make a copy</div>
+                <div class="item">
+                    <i class="folder icon"></i>
+                    Move to folder
+                </div>
+                <div class="item">
+                    <i class="trash icon"></i>
+                    Move to trash
+                </div>
+                <div class="divider"></div>
+                <div class="item">Download As...</div>
+                <div class="item">
+                    <i class="dropdown icon"></i>
+                    Publish To Web
+                    <div class="menu">
+                        <div class="item">Google Docs</div>
+                        <div class="item">Google Drive</div>
+                        <div class="item">Dropbox</div>
+                        <div class="item">Adobe Creative Cloud</div>
+                        <div class="item">Private FTP</div>Tạo mới hợp đồng
+                        <div class="item">Another Service...</div>
+                    </div>
+                </div>
+                <div class="item">E-mail Collaborators</div>
+            </div>
+        </div>-->
+
+        <!--<a v-if="(_PROFILE.group_id == 53 || _PROFILE.group_id == 44)" onclick="___popup('kit-popup-them-dang-ky', null, { strAlign: 'right', strTitle: 'Thêm mới đăng ký cầm đồ', strSubmitText: 'Tạo đăng ký mới' })" class="text-action" data-toggle="modal"
+           data-target="#add-po" data-bind="click: StartAddNewItem"
+           style="position: fixed;top: 52px;right: 40px;cursor: pointer;color: black;z-index: 999;">
+            <i class="plus icon" style="color: #036b1b;"></i>Thêm đăng ký
+        </a>-->
+
+        <div v-show="objItemsChecked.visible" class="box-chose-action-pawn"
+             style="position: fixed;z-index: 99999;top: 3px;left: 10px;height: 47px;width: 635px;background-color: rgb(60, 122, 201);box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 3px;border-radius: 3px 3px 0px 0px;padding: 5px 12px;">
+            <h3 style="color: white;width: 234px;float: left;padding-top: 7px;text-align: center;">Có {{objItemsChecked.ids.length}} đơn đã được chọn</h3>
+
+            <div class="ui selection dropdown dropdown-list-action" style="">
+                <i class="dropdown icon"></i>
+                <span class="default text">Chọn hành động</span>
+                <div class="menu">
+                    <div class="item" value="1">Chia đơn</div>
+                    <div class="item" value="2" v-if="_PROFILE.group_id == '44'">Chuyển vùng miền</div>
+                </div>
+            </div>
+
+            <button class="ui right labeled icon button red" style="float:right;margin-right:24px;" onclick="_APP.f_onchange_action();">
+                <i class="right arrow icon"></i>
+                Thao tác
+            </button>
+
+            <i class="dropdown icon" style="position: fixed; top: 44px; left: 30px; font-size: 24px; color: rgb(60, 122, 201);"></i>
+            <i class="times icon" style="position:fixed;top:10px;left:620px;z-index:999;color:white;cursor:pointer;" @click="_APP.objItemsChecked.visible = false"></i>
+        </div>
+        <!--:href="http://localhost:8001?token=_PROFILE.str_token"-->
+        <a v-if="(_PROFILE.group_id != 44)" v-on:click="f_response_pos()" target="_blank" class="btn btn-success creat-new-pawn" style="position: fixed;width: 200px;left: calc((100% - 200px) / 2);top: 3px;border-radius: 20px;padding: 9px 30px;color: rgb(255, 255, 255);background-color: rgb(70, 195, 123);border-color: rgb(52, 162, 99);font-weight: 600;"><i class="plus circle icon"></i>Tạo mới hợp đồng</a>
+
+        <button onclick="___popup('kit-popup-hien-thi-mess', null, { strAlign: 'right', strTitle: 'Thông báo' })" class="ui button" style="position: fixed;top: 15px;right: 19px;padding: 0;">
+            <span style="padding: 8px 10px 9px 10px;background: #d26a5c;border-radius: inherit;color: #fff;">
+                <i class="bell icon"></i>
+                {{objNotify.length}}
+            </span>
+        </button>
+        <div style="position: fixed;top: 4px;right: 108px;z-index:99999;">
+            <button class="ui labeled icon button button-user">
+                <i class="user icon"></i>
+                {{_PROFILE.str_full_name}}
+            </button>
+        </div>
+        <div class="ui popup control-panel-user top right transition" style="padding:0 !important;">
+            <div class="ui vertical menu">
+                <div class="ui header" style="font-size: 15px;white-space: pre-line;text-align: center;line-height: 22px;padding: 0 10px;">
+                    {{_PROFILE.str_group_name}}
+                </div>
+
+                <div class="divider"></div>
+                <div class="item">
+                    <kit-check :vue-ref="'MENU_USER___ONLINE_ON_OFF'"
+                               :str-class="'toggle'"
+                               :event-change="_APP.f_user_online_state_changed"
+                               :is-auto-save="true"
+                               :obj-value-default="_PROFILE.int_pol_status"
+                               :obj-value="{ 0: { id: 0, name: 'Offline' },1: { id: 1, name: 'Online' } }"></kit-check>
+                </div>
+
+                <div class="item link" v-show="_PROFILE.bit_admin_caller == 1" onclick="___popup('kit-popup-quan-ly-nhan-vien', null, { strAlign: 'right', strTitle: 'Quản lý nhân viên' })">
+                    <i class="users icon"></i>
+                    Quản lý nhân viên
+                </div>
+                <div class="divider"></div>
+                <div class="item link" onclick="___popup('kit-popup-bao-cao', null, { strAlign: 'right', strTitle: 'Chi tiết báo cáo' })">
+                    <i class="calendar alternate outline icon"></i>
+                    Xem chi tiết báo cáo
+                </div>
+                <div class="divider"></div>
+                <div class="item link" v-show="_PROFILE.bit_admin_caller == 1" onclick="___popup('kit-popup-xuat-excel', null, { strAlign: 'right', strTitle: 'Chi tiết báo cáo' })">
+                    <i class="file excel outline icon" style="color: #036b1b;"></i>
+                    Xuất Excel
+                </div>
+                <div class="divider"></div>
+                <div class="item link" v-show="(_PROFILE.bit_admin_caller == 1 || _PROFILE.int_approve_level==1) && objItemsChecked.ids.length > 0" @click="_APP.objItemsChecked.visible = true">
+                    <i class="chevron down icon"></i>
+                    Bạn đã chọn {{objItemsChecked.ids.length}} đơn
+                </div>
+
+                <div class="item link" onclick="___logout()">
+                    <i class="sign out alternate icon"></i>Đăng xuất
+                </div>
+            </div>
+        </div>
+
+        <table style="width:100%;height:100%;border-spacing:0;z-index:0">
+            <!--objSearch-->
+            <tr>
+                <td style="background-color:#fff;padding: 0 0 3px 0" v-bind:style="{ height: objApp.toolbar.height + 'px' }">
+                    <div v-bind:style="{ height: objApp.toolbar.height + 'px', overflow:  objApp.toolbar.height < 100 ? 'hidden':'initial' }">
+                        <div class="ui">
+                            <div class="active title" style="background-color:#F5F5F5;position:relative;">
+
+                                <div v-if="_PROFILE.group_id == 44" class="ui secondary pointing menu" style="margin:0; position: relative">
+                                    <!--CALL ONLINE-->
+                                    <a v-on:click="f_form_search_menu_state_changed(0,null,10)" tabindex="0" class="item item-mn active">Tất cả - <span> {{_DATA.objCountTotalPawnCall.call_tatca.count}}</span> </a>
+                                    <a v-on:click="f_form_search_menu_state_changed(1,2,9)" tabindex="1" class="item item-mn">Cần xử lý - <span> {{_DATA.objCountTotalPawnCall.call_canxuly.count}}</span> </a>
+                                    <a v-on:click="f_form_search_menu_state_changed(2,0,13)" tabindex="2" class="item item-mn">Hủy đăng ký - <span> {{_DATA.objCountTotalPawnCall.call_huydangky.count}}</span> </a>
+                                    <a v-on:click="f_form_search_menu_state_changed(3,1,10)" tabindex="3" class="item item-mn">Chưa tư vấn - <span> {{_DATA.objCountTotalPawnCall.call_chuatuvan.count}}</span> </a>
+                                    <a v-if="_PROFILE.bit_admin_caller ==1" v-on:click="f_form_search_menu_state_changed(4,1,12)" tabindex="4" class="item item-mn">Chưa tư vấn(chưa chia) - <span> {{_DATA.objCountTotalPawnCall.call_chuachia.count}}</span> </a>
+                                    <a v-on:click="f_form_search_menu_state_changed(5,2,10)" tabindex="5" class="item item-mn">Đang chăm sóc - <span> {{_DATA.objCountTotalPawnCall.call_dangchamsoc.count}}</span> </a>
+                                    <a v-on:click="f_form_search_menu_state_changed(6,4,10)" tabindex="6" class="item item-mn">Nhận cầm cố - <span> {{_DATA.objCountTotalPawnCall.call_nhancamco.count}}</span> </a>
+                                    <a v-on:click="f_form_search_menu_state_changed(7,2,11)" tabindex="7" class="item item-mn">Không liên lạc được - <span> {{_DATA.objCountTotalPawnCall.call_khongllduoc.count}}</span> </a>
+
+                                    <i @click="f_accordion" style="position: absolute; right: 0; font-size: 30px; cursor: pointer;padding-top: 10px;color: #999;" class="dropdown icon"></i>
+                                </div>
+                                <div v-else class="ui secondary pointing menu" style="margin:0; position: relative">
+                                    <!--QLCH, NVCH, DRS, QLV, QLKV-->
+
+                                    <a v-on:click="f_form_search_menu_state_changed(0,null,10)" tabindex="0" class="item item-mn active">Tất cả- <span> {{_DATA.objCountTotalPawnShop.shop_tatca.count}}</span> </a>
+                                    <a v-on:click="f_form_search_menu_state_changed(1,null,0)" tabindex="1" class="item item-mn">Chờ xử lý- <span> {{_DATA.objCountTotalPawnShop.shop_choxuly.count}}</span> </a>
+                                    <a v-on:click="f_form_search_menu_state_changed(2,null,1)" tabindex="2" class="item item-mn">Đang xử lý- <span> {{_DATA.objCountTotalPawnShop.shop_dangxuly.count}}</span> </a>
+                                    <a v-on:click="f_form_search_menu_state_changed(4,4,10)" tabindex="4" class="item item-mn">Nhận cầm cố- <span> {{_DATA.objCountTotalPawnShop.shop_nhancamco.count}}</span> </a>
+                                    <a v-on:click="f_form_search_menu_state_changed(5,null,4)" tabindex="5" class="item item-mn">Đã hủy- <span> {{_DATA.objCountTotalPawnShop.shop_dahuy.count}}</span> </a>
+                                    <a v-on:click="f_form_search_menu_state_changed(6,null,9)" tabindex="6" class="item item-mn">Đơn đăng ký Ô Tô- <span> {{_DATA.objCountTotalPawnShop.shop_dkoto.count}}</span> </a>
+
+                                    <i @click="f_accordion" style="position: absolute; right: 0; font-size: 30px; cursor: pointer;padding-top: 10px;color: #999;" class="dropdown icon"></i>
+                                </div>
+
+
+
+                                <div>
+                                    <a v-if="(_PROFILE.group_id == 53 || _PROFILE.group_id == 44 || _PROFILE.id==1160)" onclick="___popup('kit-popup-them-dang-ky', null, { strAlign: 'right', strTitle: 'Thêm mới đăng ký cầm đồ', strSubmitText: 'Tạo đăng ký mới' })" class="text-action" data-toggle="modal"
+                                       data-target="#add-po" data-bind="click: StartAddNewItem"
+                                       style="position: fixed;top: 52px;right: 40px;cursor: pointer;color: black;z-index: 999;">
+                                        <i class="plus icon" style="color: #036b1b;"></i>Thêm đăng ký
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="active content" style="float: left;background-color:#fff">
+                                <div style="width: 100%; float: left" id="root-parent">
+                                    <div style="float: left; width: 90%">
+                                        <!--<div class="ui grid" style="float: left; width: 100%; margin: 0 0 5px 0">
+                                            <div class="tag channels" style="float: left; width: 16.6%;min-width:260px;padding-top: 3px;">
+                                                <kit-dropdown-simple :vue-ref="'FORM_SEARCH___CHANNEL'"
+                                                                     :no-distinct="true"
+                                                                     :event-change="f_form_search_changed"
+                                                                     :str-action="'activate'"
+                                                                     :str-icon-textbox="'tag'"
+                                                                     :str-min-width="'240px'"
+                                                                     :str-placeholder="'Chọn kênh'"
+                                                                     :str-icon-item="'ui red empty circular label'"
+                                                                     :api-name="'pol_channel'"
+                                                                     :api-bind-id="'id'"
+                                                                     :api-bind-name="'str_name'"
+                                                                     :str-name-field-value="'name'"
+                                                                     :data-store-value="'_APP.objSearch.optionsRuntime.str_channel_name'"
+                                                                     :bit-full-text-search="true"></kit-dropdown-simple>
+                                            </div>
+                                            <div class="region" style="float: left; width: 16.6%;min-width:260px;padding-top: 3px;">
+                                                <kit-dropdown-simple :vue-ref="'FORM_SEARCH___AREA'"
+                                                                     :event-change="f_form_search_changed"
+                                                                     :kit-dropdown-bool-visible-text-search="false"
+                                                                     :str-action="'activate'"
+                                                                     :str-icon-textbox="'globe'"
+                                                                     :str-min-width="'240px'"
+                                                                     :str-placeholder="'Chọn khu vực'"
+                                                                     :str-icon-item="'ui red empty circular label'"
+                                                                     :api-name="'pol_area'"
+                                                                     :api-bind-id="'id'"
+                                                                     :api-bind-name="'str_name'"
+                                                                     :str-name-field-value="'id'"
+                                                                     :data-store-value="'_APP.objSearch.optionsRuntime.area_id'"
+                                                                     :bit-full-text-search="true"></kit-dropdown-simple>
+                                            </div>
+                                            <div class="city-name" style="float: left; width: 16.6%;min-width:260px;padding-top: 3px;">
+                                                <kit-dropdown-simple :vue-ref="'FORM_SEARCH___REGION_CITY'"
+                                                                     :vue-ref-callback="'FORM_SEARCH___REGION_DISTRICT'"
+                                                                     :event-change="f_form_search_changed"
+                                                                     :str-action="'activate'"
+                                                                     :str-icon-textbox="'map marker alternate'"
+                                                                     :str-min-width="'240px'"
+                                                                     :str-placeholder="'Chọn thành phố'"
+                                                                     :str-icon-item="'ui red empty circular label'"
+                                                                     :api-name="'region'"
+                                                                     :api-condition="'function(o){ return o.int_pid == 0; }'"
+                                                                     :api-bind-id="'id'"
+                                                                     :api-bind-name="'str_name'"
+                                                                     :str-name-field-value="'name'"
+                                                                     :data-store-value="'_APP.objSearch.optionsRuntime.str_city_name'"
+                                                                     :bit-full-text-search="true"></kit-dropdown-simple>
+                                            </div>
+                                            <div class="district-name-l" style="float: left; width: 16.6%;min-width:260px;padding-top: 3px;">
+                                                <kit-dropdown-simple :vue-ref="'FORM_SEARCH___REGION_DISTRICT'"
+                                                                     :event-change="f_form_search_changed"
+                                                                     :str-action="'activate'"
+                                                                     :str-icon-textbox="'map marker alternate'"
+                                                                     :str-icon-item="'ui red empty circular label'"
+                                                                     :str-min-width="'240px'"
+                                                                     :str-placeholder="'Chọn quận huyện'"
+                                                                     :api-name="'region'"
+                                                                     :api-condition="'function(o){ return o.str_parent_name == \'' + _DATA.objSearch.optionsRuntime.str_city_name + '\'; }'"
+                                                                     :api-bind-id="'id'"
+                                                                     :api-bind-name="'str_name'"
+                                                                     :str-name-field-value="'id'"
+                                                                     :data-store-value="'_APP.objSearch.optionsRuntime.district_id'"
+                                                                     :bit-full-text-search="true"></kit-dropdown-simple>
+                                            </div>
+                                            <div class="multi-check" style="float: left; width: 16.6%; min-width: 260px; padding-top: 3px;">
+                                                <kit-dropdown-check :vue-ref="'FORM_SEARCH___SHOP'"
+                                                                    :event-change="f_form_search_changed"
+                                                                    :str-action="'nothing'"
+                                                                    :str-icon-textbox="'tag'"
+                                                                    :str-min-width="'240px'"
+                                                                    :str-placeholder="'Chọn cửa hàng'"
+                                                                    :api-name="'group'"
+                                                                    :api-condition="'function(o){ if( ' + _PROFILE.group_id + ' == 44){ return true; } else { return o.id == '+_PROFILE.group_id+'; } }'"
+                                                                    :api-bind-id="'id'"
+                                                                    :api-bind-name="'str_name'"
+                                                                    :str-name-field-value="'id'"
+                                                                    :data-store-value="'_APP.objSearch.optionsRuntime.group_ids'"
+                                                                    :bit-full-text-search="true"></kit-dropdown-check>
+
+
+                                            </div>
+                                            <div class="multi-check-user" style="float: left; width: 17%;min-width: 260px;padding-top: 3px;">
+                                                <kit-dropdown-check :vue-ref="'FORM_SEARCH___USER'"
+                                                                    :event-change="f_form_search_changed"
+                                                                    :str-action="'nothing'"
+                                                                    :str-icon-textbox="'user'"
+                                                                    :str-min-width="'240px'"
+                                                                    :str-placeholder="'Chọn Caller'"
+                                                                    :api-name="'user'"
+                                                                    :api-condition="'function(o){ if( ' + _PROFILE.bit_admin_caller + ' == 1){ /* ADMIN CALL */ return o.group_id == '+ _PROFILE.group_id +'; } else { if ('+_PROFILE.int_approve_level+' == 1 && '+_PROFILE.str_user_position+' == \'3\'){ /* QL_CH */ return o.group_id == '+ _PROFILE.group_id +' } else { /* NV CALL + NV CH */ return o.id == '+_PROFILE.user_id+'; } } }'"
+                                                                    :api-bind-id="'id'"
+                                                                    :api-bind-name="'str_full_name'"
+                                                                    :str-name-field-value="'id'"
+                                                                    :data-store-value="'_APP.objSearch.optionsRuntime.caller_ids'"
+                                                                    :bit-full-text-search="true"></kit-dropdown-check>
+                                            </div>
+                                        </div>
+                                        <div class="ui grid" style="float: left; width: 100%; margin: 0 0 5px 0;">
+                                            <div class="" style="float: left; width: 16.6%;min-width: 260px;">
+                                                <kit-datetime :vue-ref="'FORM_SEARCH___FROM_DATE'"
+                                                              :event-change="f_form_search_changed"
+                                                              :str-placeholder="'Từ ngày'"
+                                                              :data-store-value="'_APP.objSearch.optionsRuntime.int_created_from_date'"></kit-datetime>
+                                            </div>
+                                            <div class="" style="float: left; width: 16.6%;min-width: 260px;">
+                                                <kit-datetime :vue-ref="'FORM_SEARCH___TO_DATE'"
+                                                              :event-change="f_form_search_changed"
+                                                              :str-placeholder="'Đến ngày'"
+                                                              :data-store-value="'_APP.objSearch.optionsRuntime.int_created_to_date'"></kit-datetime>
+                                            </div>
+                                            <div class="ui input" style="float: left; width: 66.8%;min-width: 260px;">
+                                                <kit-text :vue-ref="'FORM_SEARCH___KEYWORD_FULL_TEXT_SEARCH'"
+                                                          :event-change="f_form_search_changed"
+                                                          :data-store-value="'_APP.objSearch.optionsRuntime.str_keyword_full_text_search'"
+                                                          :str-placeholder="'Tên khách hàng, số điện thoại, tên tài sản, mã đơn, tên bộ phận...'"></kit-text>
+                                            </div>
+                                        </div>-->
+
+
+
+                                        <div class="ui grid" style="float: left; width: 100%; margin: 0 0 5px 0">
+                                            <div class="tag channels cpn-search">
+                                                <kit-dropdown-simple :vue-ref="'FORM_SEARCH___CHANNEL'"
+                                                                     :no-distinct="true"
+                                                                     :event-change="f_form_search_changed"
+                                                                     :str-action="'activate'"
+                                                                     :str-icon-textbox="'tag'"
+                                                                     :str-min-width="'240px'"
+                                                                     :str-placeholder="'Chọn kênh'"
+                                                                     :str-icon-item="'ui red empty circular label'"
+                                                                     :api-name="'pol_channel'"
+                                                                     :api-bind-id="'id'"
+                                                                     :api-bind-name="'str_name'"
+                                                                     :str-name-field-value="'name'"
+                                                                     :data-store-value="'_APP.objSearch.optionsRuntime.str_channel_name'"
+                                                                     :bit-full-text-search="true"></kit-dropdown-simple>
+                                            </div>
+                                            <div class="region cpn-search cpn-search">
+                                                <kit-dropdown-simple :vue-ref="'FORM_SEARCH___AREA'"
+                                                                     :event-change="f_form_search_changed"
+                                                                     :kit-dropdown-bool-visible-text-search="false"
+                                                                     :str-action="'activate'"
+                                                                     :str-icon-textbox="'globe'"
+                                                                     :str-min-width="'240px'"
+                                                                     :str-placeholder="'Chọn tất cả Miền'"
+                                                                     :str-icon-item="'ui red empty circular label'"
+                                                                     :api-name="'pol_area'"
+                                                                     :api-bind-id="'id'"
+                                                                     :api-bind-name="'str_name'"
+                                                                     :str-name-field-value="'id'"
+                                                                     :data-store-value="'_APP.objSearch.optionsRuntime.area_id'"
+                                                                     :bit-full-text-search="true"></kit-dropdown-simple>
+                                            </div>
+                                            <div class="city-name cpn-search">
+                                                <kit-dropdown-simple :vue-ref="'FORM_SEARCH___REGION_CITY'"
+                                                                     :vue-ref-callback="'FORM_SEARCH___REGION_DISTRICT'"
+                                                                     :event-change="f_form_search_changed"
+                                                                     :str-action="'activate'"
+                                                                     :str-icon-textbox="'map marker alternate'"
+                                                                     :str-min-width="'240px'"
+                                                                     :str-placeholder="'Chọn thành phố'"
+                                                                     :str-icon-item="'ui red empty circular label'"
+                                                                     :api-name="'region'"
+                                                                     :api-condition="'function(o){ return o.int_pid == 0; }'"
+                                                                     :api-bind-id="'id'"
+                                                                     :api-bind-name="'str_name'"
+                                                                     :str-name-field-value="'name'"
+                                                                     :data-store-value="'_APP.objSearch.optionsRuntime.str_city_name'"
+                                                                     :bit-full-text-search="true"></kit-dropdown-simple>
+                                            </div>
+                                            <div class="district-name-l cpn-search">
+                                                <kit-dropdown-simple :vue-ref="'FORM_SEARCH___REGION_DISTRICT'"
+                                                                     :event-change="f_form_search_changed"
+                                                                     :str-action="'activate'"
+                                                                     :str-icon-textbox="'map marker alternate'"
+                                                                     :str-icon-item="'ui red empty circular label'"
+                                                                     :str-min-width="'240px'"
+                                                                     :str-placeholder="'Chọn quận huyện'"
+                                                                     :api-name="'region'"
+                                                                     :api-condition="'function(o){ return o.str_parent_name == \'' + _DATA.objSearch.optionsRuntime.str_city_name + '\'; }'"
+                                                                     :api-bind-id="'id'"
+                                                                     :api-bind-name="'str_name'"
+                                                                     :str-name-field-value="'id'"
+                                                                     :data-store-value="'_APP.objSearch.optionsRuntime.district_id'"
+                                                                     :bit-full-text-search="true"></kit-dropdown-simple>
+                                            </div>
+                                            <div class="multi-check cpn-search">
+                                                <!--:api-condition="'function(o){ if( ' + _PROFILE.group_id + ' == 44){ return true; } else { return o.id == '+_PROFILE.group_id+'; } }'"-->        <!--if (v.length > 1) a.push(' "' + v + '".indexOf("," + o.group_id + ",") != -1 ');-->
+                                                <kit-dropdown-check :vue-ref="'FORM_SEARCH___SHOP'"
+                                                                    :event-change="f_form_search_changed"
+                                                                    :str-action="'nothing'"
+                                                                    :str-icon-textbox="'tag'"
+                                                                    :str-min-width="'240px'"
+                                                                    :str-placeholder="'Chọn cửa hàng'"
+                                                                    :api-name="'group'"
+                                                                    :api-condition="'function(o){ if( ' + _PROFILE.group_id + ' == 44){ return true; } else if( ' + _PROFILE.int_approve_level  + ' == 2 ){ return \''+  _PROFILE.group_qlkv +'\'.indexOf(\',\' + o.id + \',\')  != -1; } else { return o.id == ' + _PROFILE.group_id + '; } }'"
+                                                                    :api-bind-id="'id'"
+                                                                    :api-bind-name="'str_name'"
+                                                                    :str-name-field-value="'id'"
+                                                                    :data-store-value="'_APP.objSearch.optionsRuntime.group_ids'"
+                                                                    :bit-full-text-search="true"></kit-dropdown-check>
+
+
+                                            </div>
+                                            <div class="multi-check-user cpn-search">
+                                                <kit-dropdown-check :vue-ref="'FORM_SEARCH___USER'"
+                                                                    :event-change="f_form_search_changed"
+                                                                    :str-action="'nothing'"
+                                                                    :str-icon-textbox="'user'"
+                                                                    :str-min-width="'240px'"
+                                                                    :str-placeholder="'Chọn Caller'"
+                                                                    :api-name="'user'"
+                                                                    :api-condition="'function(o){ if( ' + _PROFILE.bit_admin_caller + ' == 1){ /* ADMIN CALL */ return o.group_id == '+ _PROFILE.group_id +'; } else if( ' + _PROFILE.int_approve_level  + ' == 2 ){  /* QLKV-DROPDOW */ return \''+  _PROFILE.group_qlkv +'\'.indexOf(\',\' +  o.group_id + \',\')  != -1;} else { if ('+_PROFILE.int_approve_level+' == 1 && '+_PROFILE.str_user_position+' == \'3\'){ /* QL_CH */ return o.group_id == '+ _PROFILE.group_id +' } else { /* NV CALL + NV CH */ return o.id == '+_PROFILE.user_id+'; } } }'"
+                                                                    :api-bind-id="'id'"
+                                                                    :api-bind-name="'str_full_name'"
+                                                                    :str-name-field-value="'id'"
+                                                                    :data-store-value="'_APP.objSearch.optionsRuntime.caller_ids'"
+                                                                    :bit-full-text-search="true"></kit-dropdown-check>
+                                            </div>
+
+
+
+                                            <div class="cpn-search">
+                                                <kit-datetime :vue-ref="'FORM_SEARCH___FROM_DATE'"
+                                                              :event-change="f_form_search_changed"
+                                                              :str-placeholder="'Từ ngày'"
+                                                              :data-store-value="'_APP.objSearch.optionsRuntime.int_created_from_date'"></kit-datetime>
+                                            </div>
+                                            <div class="cpn-search">
+                                                <kit-datetime :vue-ref="'FORM_SEARCH___TO_DATE'"
+                                                              :event-change="f_form_search_changed"
+                                                              :str-placeholder="'Đến ngày'"
+                                                              :data-store-value="'_APP.objSearch.optionsRuntime.int_created_to_date'"></kit-datetime>
+                                            </div>
+                                            <div class="ui input" style="float: left;min-width: 544px; padding-top: 3px;">
+                                                <kit-text :vue-ref="'FORM_SEARCH___KEYWORD_FULL_TEXT_SEARCH'"
+                                                          :event-change="f_form_search_changed"
+                                                          :data-store-value="'_APP.objSearch.optionsRuntime.str_keyword_full_text_search'"
+                                                          :str-placeholder="'Tên khách hàng, số điện thoại, tên tài sản, mã đơn, tên bộ phận...'"></kit-text>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="float: right; width: 10%">
+                                        <button class="ui basic button" style="font-size: 20px; margin-top: 3px" id="btn-search-filter" v-on:click="_APP.f_form_search_changed">
+                                            <i class="icon search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <!--objMainGrid-->
+
+            <tr>
+                <td valign="top" align="left" class="app-grid-main" style="position:relative;">
+                    <div v-show="objMainGrid.loading" style="position:absolute;top:0;left:0;width:100%;height:100%;background-color:#fff;z-index:1;">
+                        <div class="ui">
+                            <div class="ui active slow green double loader"></div>
+                        </div>
+                    </div>
+                    <table id="example" class="stripe row-border order-column vue-table-main" style="width:800px;z-index:0;">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="ui read-only checkbox checkbox-all" onclick="_APP.f_pawn_list_checkall___on_click(event)"><input type="checkbox"></div>
+                                </th>
+                                <th>STT</th>
+                                <th>Khách hàng</th>
+                                <th>Giá trị vay</th>
+                                <th style="width: 100px !important">Ngày tạo</th>
+                                <th style="width: 400px !important">Địa chỉ</th>
+                                <th style="width: 100px !important">TP|QH</th>
+                                <th style="width: 100px !important">Mã đơn</th>
+                                <th style="width: 100px !important">Loại TS</th>
+                                <th style="width: 100px !important">TSHĐ</th>
+                                <th style="width: 100px !important">Kênh</th>
+                                <th style="width: 100px !important">Caller</th>
+                                <th style="width: 100px !important">Đang xử lý</th>
+                                <th style="width: 100px !important">Tên TS</th>
+                                <th></th>
+                                <th style="width: 100px !important">Trạng thái</th>
+                                <th style="width: 100px !important">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </td>
+            </tr>
+            <!--<tr>
+                <td style="background-color:#fff;padding:0 10px 0 25px;" v-bind:style="{ height: objApp.pager.height + 'px' }">
+                    <div v-show="objModel.count_result > 0" class="app-pager-main">
+                        <div>
+                            Hiển thị <b>{{objModel.page_number}}</b> - <b>{{objModel.page_total}}</b> trang, trong <b>{{objModel.count_result}}</b> bản ghi
+                        </div>
+                        <p>
+                            <i class="step forward icon" @click="f_pager_goLast"></i>
+                            <i class="chevron right icon" @click="f_pager_goNext"></i>
+                            <b>{{objModel.page_number}}</b>
+                            <i class="chevron left icon" @click="f_pager_goPrev"></i>
+                            <i class="step backward icon" @click="f_pager_goFirst"></i>
+                        </p>
+                    </div>
+                </td>
+            </tr>-->
+
+
+            <tr>
+                <td style="background-color:#fff;padding:0 10px 0 25px;" v-bind:style="{ height: objApp.pager.height + 'px' }">
+                    <div v-show="objModel.count_result > 0" class="app-pager-main">
+                        <div>
+                            Hiển thị <b>{{objModel.page_number}}</b> - <b>{{objModel.page_total}}</b> trang, trong <b>{{objModel.count_result}}</b> bản ghi
+                        </div>
+
+                        <!--<p v-html="_APP.f_pager_draws_html()"></p>-->
+                        <p id="pager-pawn"></p>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="padding:0 25px;font-size:11px;" v-bind:style="{ height: objApp.footer.height + 'px' }">
+                    <div style="float:left">
+                        Sản phẩm từ <i class="icon heart" style="color:#ff6b6b;"></i> với <a href="http://f88.vn" target="_blank">F88</a>
+                    </div>
+                    <div style="float:right">
+                        <a href="https://pawnonline.f88.vn/" target="_blank">F88 PawnOnline 1.0</a> | <span>2019</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="dom_temp___"></div>
+</body>
+</html>

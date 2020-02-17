@@ -1,0 +1,13 @@
+﻿
+<div class="ui drop-max floating dropdown labeled icon button" style="border: 1px solid rgba(34,36,38,.15);background: #ffff;width: 100%"> 
+    <i class= "calendar icon"></i> 
+    <span class="text" :value="items[0].id">{{items[0].title}}</span> 
+    <div class="menu"> 
+        <div class="scrolling menu" > 
+            <div class="item" v-for="item in items" :data-value="item.id">
+                <div class="ui red empty circular label" ></div>
+                {{item.title=="" ? "Không xác định":item.title}}
+            </div> 
+            </div> 
+        </div> 
+    </div>

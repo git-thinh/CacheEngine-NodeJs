@@ -1,0 +1,24 @@
+﻿<div>
+    <div style="padding: 15px 15px 80px;">
+        <div style="float:left;width:100%;margin-bottom:15px">
+            <span>Báo cáo này để xuất ra báo cáo những trường hợp khách hàng tạo hợp đồng nhưng không đuợc ghi nhận cho POL</span>
+        </div>
+        <div style="float:left;width:100%;margin-bottom:15px">
+            <div>
+                <div style="float:left; margin-right:13px;">
+                    <label>Từ ngày</label>
+                    <kit-full-date-time :vue-ref="'FORM_EXCEL___TIME1'" style="min-width: 250px; width: 150px;"></kit-full-date-time>
+                </div>
+                <div style="float:left;">
+                    <label>Đến ngày</label>
+                    <kit-full-date-time :vue-ref="'FORM_EXCEL___TIME2'" style="min-width: 250px; width: 150px;"></kit-full-date-time>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div for="___footer">
+        <!--<button tabindex="0" @click="___submit('HUY_DON')" type="button" class="ui red button">Hủy đơn</button>-->
+        <button tabindex="1" @click="___submit" type="button" class="ui blue button right"> Tải về</button>
+    </div>
+</div>

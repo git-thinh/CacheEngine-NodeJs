@@ -1,0 +1,240 @@
+﻿<div class="ui form" style="padding:10px;width:100%;">
+    <h4 class="ui dividing header" style="margin-top: 0;">Thông tin kênh</h4>
+    <div class="field">
+        <label>Kênh:</label>
+        <!--<kit-dropdown-simple :vue-ref="'FORM_PAWN_ADDNEW___CHANNEL'"
+                                 :str-action="'activate'"
+                                 :str-icon-textbox="'tag'"
+                                 :str-placeholder="'Chọn kênh'"
+                                 :api-name="'pol_channel'"
+                                 :api-bind-id="'id'"
+                                 :api-bind-name="'str_name'"
+                                 :str-name-field-value="'id'"
+                                 :data-store-type="'int'"
+                                 :data-store-value="'objUpdate.channel_id'"
+                                 :data-store-text="'objUpdate.str_channel_name'"
+                                 :obj-error-key="'channel_id'"
+                                 :bit-full-text-search="true"></kit-dropdown-simple>
+        <span style="color: red">{{objErrorLabel.channel_id}}</span>-->
+        
+        <kit-dropdown-simple :vue-ref="'FORM_PAWN_ADDNEW___CHANNEL'"
+                             :str-action="'activate'"
+                             :str-icon-textbox="'tag'"
+                             :str-placeholder="'Chọn kênh'"
+                             :api-name="'pol_channel'"
+                             :api-bind-id="'id'"
+                             :api-bind-name="'str_name'"
+                             :api-condition="'function(o){ return o.int_status == 2; }'"
+                             :str-name-field-value="'id'"
+                             :data-store-type="'int'"
+                             :data-store-value="'objUpdate.channel_id'"
+                             :data-store-text="'objUpdate.str_channel_name'"
+                             :bit-full-text-search="true"></kit-dropdown-simple>
+    </div>
+    <div class="field">
+        <label>URL:</label>
+        <!--<kit-text :vue-ref="'FORM_PAWN_ADDNEW___URL'"
+                      :data-store-type="'string'"
+                      :data-store-value="'objUpdate.str_url'"
+                      :is-auto-save="true"
+                      :obj-error-key="'str_url'"
+            ></kit-text>
+        <span style="color: red">{{objErrorLabel.str_url}}</span>-->
+        
+        <kit-text :vue-ref="'FORM_PAWN_ADDNEW___URL'"
+                  :data-store-type="'string'"
+                  :data-store-value="'objUpdate.str_url'"
+                  :is-auto-save="true"
+        ></kit-text>
+    </div>
+
+    <h4 class="ui dividing header" style="margin-top: 0;">Thông tin cá nhân</h4>
+    <div class="field">
+        <label>Tên khách hàng:<span>*</span></label>
+        <kit-text :vue-ref="'FORM_PAWN_ADDNEW___NAME'"
+                  :data-store-type="'string'"
+                  :data-store-value="'objUpdate.str_cus_name'"
+                  :is-auto-save="true"
+                  :obj-error-key="'str_cus_name'"></kit-text>
+        <span style="color: red">{{objErrorLabel.str_cus_name}}</span>
+    </div>
+    <div class="field">
+        <kit-radio :vue-ref="'FORM_PAWN_ADDNEW___GENDER'"
+                   :str-title="'Chọn giới tính'"
+                   :data-store-type="'int'"
+                   :data-store-value="'objUpdate.int_cus_gender'"
+                   :is-auto-save="true"
+                   :obj-value-default="1"
+                   :obj-value="[{ id: 1, name: 'Nam' }, { id: 0, name: 'Nữ' }]"></kit-radio>
+        <span style="color: red">{{objErrorLabel.int_cus_gender}}</span>
+    </div>
+    <div class="two fields">
+        <div class="field">
+            <label>Tỉnh / TP:<span>*</span></label>
+            <kit-dropdown-simple :vue-ref="'FORM_ADD_PAWN___REGION_CITY'"
+                                 :vue-ref-callback="'FORM_ADD_PAWN___REGION_DISTRICT'"
+                                 :str-action="'activate'"
+                                 :str-icon-textbox="'map marker alternate'"
+                                 :str-icon-item="'hidden'"
+                                 :str-placeholder="'Chọn thành phố'"
+                                 :api-name="'region'"
+                                 :api-condition="'function(o){ return o.int_pid == 0; }'"
+                                 :api-bind-id="'id'"
+                                 :api-bind-name="'str_name'"
+                                 :str-name-field-value="'id'"
+                                 :data-store-type="'int'"
+                                 :data-store-value="'objUpdate.city_id'"
+                                 :data-store-text="'objUpdate.str_city_name'"
+                                 :obj-error-key="'city_id'"
+                                 :bit-full-text-search="true"></kit-dropdown-simple>
+
+            <span style="color: red">{{objErrorLabel.city_id}}</span>
+        </div>
+        <div class="field">
+            <label>Quận / Huyện:<span>*</span></label>
+            <kit-dropdown-simple :vue-ref="'FORM_ADD_PAWN___REGION_DISTRICT'"
+                                 :str-action="'activate'"
+                                 :str-icon-textbox="'map marker alternate'"
+                                 :str-icon-item="'hidden'"
+                                 :str-placeholder="'Chọn quận huyện'"
+                                 :api-name="'region'"
+                                 :api-condition="'function(o){ return o.int_pid == '+ objUpdate.city_id + '; }'"
+                                 :api-bind-id="'id'"
+                                 :api-bind-name="'str_name'"
+                                 :str-name-field-value="'id'"
+                                 :data-store-type="'int'"
+                                 :data-store-value="'objUpdate.district_id'"
+                                 :data-store-text="'objUpdate.str_district_name'"
+                                 :obj-error-key="'district_id'"
+                                 :bit-full-text-search="true"></kit-dropdown-simple>
+
+            <span style="color: red">{{objErrorLabel.district_id}}</span>
+        </div>
+    </div>
+
+
+    <div class="field">
+        <label>Địa chỉ:</label>
+        <kit-text :vue-ref="'FORM_PAWN_ADDNEW___CUS_ADDRESS'"
+                  :str-placeholder="'Nhập địa chỉ khách hàng'"
+                  :data-store-type="'string'"
+                  :data-store-value="'objUpdate.str_cus_address'"
+                  :is-auto-save="true"
+                  ></kit-text>
+        <span style="color: red">{{objErrorLabel.str_cus_address}}</span>
+    </div>
+    <div class="two fields">
+        <div class="field">
+            <label>Số điện thoại:<span>*</span></label>
+            <kit-text :vue-ref="'FORM_PAWN_ADDNEW___CUS_PHONE'"
+                      :str-input-type="'number'"
+                      :str-placeholder="'Nhập số điện thoại khách hàng'"
+                      :data-store-type="'string'"
+                      :data-store-value="'objUpdate.str_cus_phone'"
+                      :is-auto-save="true"
+                      :obj-error-key="'str_cus_phone'"></kit-text>
+            <span style="color: red">{{objErrorLabel.str_cus_phone}}</span>
+        </div>
+        <div class="field">
+            <label>Email:</label>
+            <kit-text :vue-ref="'FORM_PAWN_ADDNEW___CUS_EMAIL'"
+                      :str-placeholder="'Nhập email khách hàng'"
+                      :data-store-type="'string'"
+                      :data-store-value="'objUpdate.str_cus_email'"
+                      :is-auto-save="true"
+            ></kit-text>
+            <span style="color: red">{{objErrorLabel.str_cus_email}}</span>
+        </div>
+    </div>
+
+
+    <h4 class="ui dividing header">Thông tin tài sản</h4>
+<div class="two fields">
+    <div class="field">
+        <label>Số tiền vay:<span>*</span></label>
+        <kit-text :vue-ref="'FORM_PAWN_ADDNEW___LNG_MONEY'"
+                  :str-input-type="'number'"
+                  :str-placeholder="'Nhập số tiền vay'"
+                  :data-store-type="'int'"
+                  :data-store-value="'objUpdate.lng_money'"
+                  :is-auto-save="true"
+                  :obj-error-key="'lng_money'"></kit-text>
+
+        <span style="color: red">{{objErrorLabel.lng_money}}</span>
+    </div>
+    <div class="field">
+        <label>Số ngày vay:<span>*</span></label>
+        <kit-text :vue-ref="'FORM_PAWN_ADDNEW___INT_DAYS'"
+                  :str-input-type="'number'"
+                  :str-placeholder="'Nhập số ngày vay'"
+                  :data-store-type="'int'"
+                  :data-store-value="'objUpdate.int_days'"
+                  :is-auto-save="true"
+                  :obj-error-key="'int_days'"></kit-text>
+
+        <span style="color: red">{{objErrorLabel.int_days}}</span>
+    </div>
+
+</div>
+    <div class="two fields">
+        <div class="field">
+            <label>Loại tài sản:<span>*</span></label>
+            <kit-dropdown-simple :vue-ref="'FORM_ADD_PAWN___ASSET_NAME'"
+                                 :str-action="'activate'"
+                                 :str-icon-textbox="'tag'"
+                                 :str-icon-item="'hidden'"
+                                 :str-placeholder="'Chọn tài sản'"
+                                 :api-name="'pol_asset_type'"
+                                 :api-condition="'function(o){ return o.int_status == 1; }'"
+                                 :api-bind-id="'id'"
+                                 :api-bind-name="'str_name'"
+                                 :str-name-field-value="'id'"
+                                 :data-store-type="'int'"
+                                 :data-store-value="'objUpdate.asset_type_id'"
+                                 :data-store-text="'objUpdate.str_asset_type_name'"
+                                 :obj-error-key="'asset_type_id'"
+                                 :bit-full-text-search="true"></kit-dropdown-simple>
+
+            <span style="color: red">{{objErrorLabel.asset_type_id}}</span>
+        </div>
+        <div class="field">
+            <label>Tên tài sản:</label>
+            <kit-text :vue-ref="'FORM_PAWN_ADDNEW___STR_TRADEMARK'"
+                      :data-store-type="'string'"
+                      :data-store-value="'objUpdate.str_trademark'"
+                      :is-auto-save="true"
+                      ></kit-text>
+        </div>
+
+    </div>
+
+    <div class="field" v-show="objUpdate.asset_type_id == 1">
+        <label></label>
+        <kit-check :vue-ref="'FORM_PAWN_ADDNEW___BIT_CAR_IN_BANK'"
+                   :data-store-type="'int'"
+                   :data-store-value="'objUpdate.bit_car_in_bank'"
+                   :obj-value-default="'0'"
+                   :obj-value="{ 1: { id: 1, name: 'Thế chấp ngân hàng' }, 0: { id: 0, name: 'Thế chấp ngân hàng' } }"
+                   :is-auto-save="true"></kit-check>
+    </div>
+    <div class="field">
+        <label>Năm sản xuất:</label>
+        <kit-text :vue-ref="'FORM_PAWN_ADDNEW___STR_PRODUCT_YEAR'"
+                  :str-placeholder="'Nhập năm sản xuất tài sản'"
+                  :data-store-type="'string'"
+                  :data-store-value="'objUpdate.str_product_year'"
+                  :is-auto-save="true"
+                  ></kit-text>
+    </div>
+    <div class="field">
+        <label>Mô tả tài sản:</label>
+        <kit-textarea :vue-ref="'FORM_PAWN_ADDNEW___STR_DESCRIPTION'"
+                      :str-style="'width: 100%;height: 69px;'"
+                      :str-placeholder="'Nhập mô tả'"
+                      :data-store-type="'string'"
+                      :data-store-value="'objUpdate.str_description'"
+                      :is-auto-save="true"
+                      ></kit-textarea>
+    </div> 
+     
+</div>
